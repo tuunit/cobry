@@ -1,14 +1,24 @@
 language: python
+
+cache: pip
+
 python:
     - "3.4"
     - "3.5"
     - "3.6"
     - "3.7"
     - "3.8"
-    - "3.8-dev"
     - "nightly"
+
+matrix:
+    allow_failures:
+        - python: "nightly"
 
 install:
     - ./build_install.sh
 
-script: python tests/test_import.py
+script: 
+    - python tests/test_import.py
+
+after_script:
+    - bash <(curl -s https://codecov.io/bash)
