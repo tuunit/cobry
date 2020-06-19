@@ -10,6 +10,3 @@ python:
 
 install:
     - ./build_install.sh
-
-virtualenv:
-      system_site_packages: true
