@@ -6,3 +6,6 @@ On further notice, cobry is a python port (WIP) of the popular GOlang CLI creati
 
 
 [![Build Status](https://travis-ci.org/tuunit/cobry.svg?branch=master)](https://travis-ci.org/tuunit/cobry)
+[![Coverage Status](https://coveralls.io/repos/github/tuunit/cobry/badge.svg?branch=master)](https://coveralls.io/github/tuunit/cobry?branch=master)
+![PyPI - Downloads](https://img.shields.io/pypi/dm/cobry)
+![PyPI - License](https://img.shields.io/pypi/l/cobry)
