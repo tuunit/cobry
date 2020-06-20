@@ -8,7 +8,7 @@ setup(
     version = '0.1.0',
     author = 'Jan Larwig',
     author_email = 'jan@larwig.com',
-    license='MIT License',
+    license='BSD 3-Clause License',
     url='https://github.com/tuunit/cobry',
     description='Yet another command line interface toolkit to built versatile and modern CLI applications.',
     long_description=long_description,
@@ -16,7 +16,7 @@ setup(
     classifiers=[
         'Development Status :: 1 - Planning',
         'Intended Audience :: Developers',
-        'License :: OSI Approved :: MIT License',
+        'License :: OSI Approved :: BSD License',
         'Programming Language :: Python :: 3',
         'Operating System :: OS Independent'
     ],
