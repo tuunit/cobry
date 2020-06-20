@@ -9,4 +9,4 @@ On further notice, cobry is a python port (WIP) of the popular GOlang CLI creati
 [![codecov](https://codecov.io/gh/tuunit/cobry/branch/master/graph/badge.svg)](https://codecov.io/gh/tuunit/cobry)
 [![PyPI - Downloads](https://img.shields.io/pypi/dm/cobry)](https://pypi.org/project/cobry/)
 [![PyPI version](https://badge.fury.io/py/cobry.svg)](https://badge.fury.io/py/cobry)
-[![PyPI - License](https://img.shields.io/pypi/l/cobry)](https://github.com/tuunit/cobry/blob/master/LICENSE)
+[![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://github.com/tuunit/cobry/blob/master/LICENSE)
