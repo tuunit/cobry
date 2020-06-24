@@ -18,7 +18,7 @@ install:
     - ./build_install.sh
 
 script: 
-    - python tests/test_import.py
+    - python tests/my-calc.py add 1 2
 
 after_script:
     - bash <(curl -s https://codecov.io/bash)
