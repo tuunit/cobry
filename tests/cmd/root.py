@@ -5,7 +5,7 @@ from .add import add_cmd
 def run(args):
     print('Hello CLI')
     if len(args) > 0:
-        print(f'You have given me the following commands: {args}')
+        print('You have given me the following commands: {}'.format(args))
 
 
 root_cmd = cobry.Command(

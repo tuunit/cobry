@@ -6,10 +6,10 @@ def add_int(args):
         try:
             val = int(val)
         except:
-            print(f'ERROR: argument {i} is not an integer: given {val}')
+            print('ERROR: argument {} is not an integer: given {}'.format(i, val))
             return
         _sum = _sum + val
-    print(f'Sum of {args} is {_sum}')
+    print('Sum of {} is {}'.format(args, _sum))
 
 
 add_cmd = cobry.Command(
