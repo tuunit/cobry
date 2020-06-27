@@ -1,5 +1,7 @@
 import sys
-from .args import args_minus_first
+from .flag_set import FlagSet
+from .args import args_minus_first, strip_flags
+
 
 class Command:
     def __init__(
@@ -16,6 +18,9 @@ class Command:
         self.on_init_func = None
         self.commands = []
         self.parent = None
+        self.flags = FlagSet()
+        self.pflags = FlagSet()
+        self.parents_pflags = FlagSet()
 
     def execute(self):
         if self.has_parent():
@@ -36,6 +41,7 @@ class Command:
             print('ERROR command does not exist')
 
     def execute_cmd(self, args):
+        err = self.parse_flags(args)
         self.run(args)
 
     def has_parent(self):
@@ -48,7 +54,7 @@ class Command:
 
     def find(self, args):
         def inner_find(c, inner_args):
-            args_wo_flags = inner_args
+            args_wo_flags = strip_flags(args, self)
             if len(args_wo_flags) == 0:
                 return c, inner_args
 
@@ -63,6 +69,21 @@ class Command:
 
         return command_found, a, None
 
+    def merge_persistent_flags(self):
+        self.update_parents_pflags()
+        self.flags.add_flagset(self.pflags)
+        self.flags.add_flagset(self.parents_pflags)
+
+    def update_parents_pflags(self):
+        def add_pflags(parent):
+            self.parents_pflags.add_flagset(parent.pflags)
+        self.visit_parent(add_pflags)
+
+    def visit_parent(self, func):
+        if self.has_parent():
+            func = func(self.parent)
+            self.parent.visit_parent(func)
+
     def name(self):
         name = self.use
         i = name.find(' ')
@@ -76,3 +97,8 @@ class Command:
     def add_command(self, cmd):
         cmd.parent = self
         self.commands.append(cmd)
+
+    def parse_flags(self, args):
+        self.merge_persistent_flags()
+
+        err = self.flags.parse(args)
