@@ -28,7 +28,8 @@ def init_config():
 def init():
     root_cmd.on_initialize(init_config)
     root_cmd.add_command(add_cmd)
-    root_cmd.pflags.add_flag(int, 'help', 3, shorthand='h', usage='I don\'t really know')
+    root_cmd.pflags.add_flag(typ=bool, name='help', value=True, shorthand='h', usage='I don\'t really know')
+    root_cmd.pflags.add_flag(typ=int, name='count', value=1, shorthand='c', usage='I don\'t really know')
 
 
 def execute():

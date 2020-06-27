@@ -18,9 +18,9 @@ class Command:
         self.on_init_func = None
         self.commands = []
         self.parent = None
-        self.flags = FlagSet()
-        self.pflags = FlagSet()
-        self.parents_pflags = FlagSet()
+        self.flags = FlagSet('FlagSet(Command={}, Set={})'.format(self.name(), 'Flags'))
+        self.pflags = FlagSet('FlagSet(Command={}, Set={})'.format(self.name(), 'PFlags'))
+        self.parents_pflags = FlagSet('FlagSet(Command={}, Set={})'.format(self.name(), 'Parents_PFlags'))
 
     def execute(self):
         if self.has_parent():
@@ -42,6 +42,10 @@ class Command:
 
     def execute_cmd(self, args):
         err = self.parse_flags(args)
+        if err is not None:
+            print('PARSE ERROR')
+            exit(1)
+
         self.run(args)
 
     def has_parent(self):
@@ -101,4 +105,4 @@ class Command:
     def parse_flags(self, args):
         self.merge_persistent_flags()
 
-        err = self.flags.parse(args)
+        return self.flags.parse(args)

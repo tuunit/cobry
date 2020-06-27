@@ -2,7 +2,8 @@ from .flag import Flag
 
 
 class FlagSet:
-    def __init__(self):
+    def __init__(self, name):
+        self.name = name
         self.usage = lambda x: print(x)
         self.flags = {}
         self.set_flags = {}
@@ -13,9 +14,13 @@ class FlagSet:
 
     def add_flagset(self, flagset):
         self.flags.update(flagset.flags)
+        self.shorthands.update(flagset.shorthands)
 
     def add_flag(self, typ, name, value, shorthand=None, usage=None):
         flag = Flag(typ=typ, name=name, value=typ(value), shorthand=shorthand, usage=usage, def_value=str(value))
+        if typ == bool:
+            flag.no_opt_def_val = 'True'
+
         if name in self.flags:
             # TODO
             print('PANIC FLAG ALREADY EXISTS')
@@ -33,9 +38,12 @@ class FlagSet:
             return
 
         if shorthand in self.shorthands:
-            print('SHORTHAND ALREADY EXISTS')
+            print('unable to redefine {} shorthand in {} flagset: it\'s already used for {} flag',
+                  shorthand,
+                  self.name,
+                  self.shorthands[shorthand].name)
             return
-        self.flags[shorthand] = flag
+        self.shorthands[shorthand] = flag
 
     def set_flag(self, name, value):
         # TODO normalize
@@ -43,8 +51,6 @@ class FlagSet:
 
         if nname not in self.flags:
             # TODO
-            print(self.flags)
-            print(nname)
             print('No such flag')
             return ValueError
 
@@ -103,13 +109,13 @@ class FlagSet:
                 args, err = self.parse_short_args(s, args)
 
             if err is not None:
+                print('PARSING FAILED')
                 return err
         return None
 
     def parse_long_args(self, s, args):
         a = args
         name = s[2:]
-        print(a, name)
 
         if len(name) == 0 or name[0] == '-' or name[0] == '=':
             print('bad flag syntax {}'.format(s))
@@ -157,6 +163,7 @@ class FlagSet:
 
         if c not in self.shorthands:
             # TODO
+            print('Shorthand does not exist')
             return out_shorts, out_args, ValueError()
 
         flag = self.shorthands[c]
@@ -164,7 +171,7 @@ class FlagSet:
         if len(shorthands) > 2 and shorthands[1] == '=':
             value = shorthands[2:]
             out_shorts = ''
-        elif flag.no_opt_def_val != '':
+        elif flag.no_opt_def_val:
             value = flag.no_opt_def_val
         elif len(shorthands) > 1:
             value = shorthands[1:]
